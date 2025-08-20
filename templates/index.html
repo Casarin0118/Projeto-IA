@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Site</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <strong>logo do site</strong>
+        <div>
+            <a href="#">quem somos</a>
+            <a href="#">como funciona</a>
+            <a href="#">empresa</a>
+            <a class="btn" href="{{ url_for('cadastrar') }}">Cadastrar perfil</a>
+        </div>
+    </nav>
+
+    <table>
+        <tr>
+            <th>PERFIL</th>
+            <th>DESCRIÇÃO</th>
+            <th>AÇÕES</th>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td><button>Upload PDF</button></td>
+        </tr>
+        <tr><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td></tr>
+    </table>
+</body>
+</html>
