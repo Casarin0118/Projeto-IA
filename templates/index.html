@@ -1,34 +1,64 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Site</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="UTF-8" />
+  <title>Site</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 </head>
 <body>
-    <nav>
-        <strong>logo do site</strong>
-        <div>
-            <a href="#">quem somos</a>
-            <a href="#">como funciona</a>
-            <a href="#">empresa</a>
-            <a class="btn" href="{{ url_for('cadastrar') }}">Cadastrar perfil</a>
-        </div>
-    </nav>
+  <nav>
+    <strong>logo do site</strong>
+    <div>
+      <a href="#">quem somos</a>
+      <a href="#">como funciona</a>
+      <a href="#">empresa</a>
+      <a class="btn" href="{{ url_for('cadastrar') }}">Cadastrar perfil</a>
+    </div>
+  </nav>
 
-    <table>
-        <tr>
-            <th>PERFIL</th>
-            <th>DESCRIÇÃO</th>
-            <th>AÇÕES</th>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td><button>Upload PDF</button></td>
-        </tr>
-        <tr><td></td><td></td><td></td></tr>
-        <tr><td></td><td></td><td></td></tr>
-    </table>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div style="margin:20px; color:#0a7a0a;">
+        {% for m in messages %}
+          <p>{{ m }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <table>
+    <tr>
+      <th>PERFIL</th>
+      <th>DESCRIÇÃO</th>
+      <th>AÇÕES</th>
+    </tr>
+
+    {% for linha in linhas %}
+    <tr>
+      <td>{{ linha.perfil }}</td>
+      <td>{{ linha.descricao }}</td>
+      <td>
+        {% if linha.arquivo %}
+          ✅ <a href="{{ url_for('uploaded_file', filename=linha.arquivo) }}" target="_blank">
+            {{ linha.arquivo }}
+          </a>
+        {% else %}
+          <form method="POST" enctype="multipart/form-data">
+            <input
+              id="file{{ loop.index }}"
+              type="file"
+              name="pdf_file"
+              accept="application/pdf"
+              style="display:none"
+              onchange="this.form.submit()" />
+            <button type="button" onclick="document.getElementById('file{{ loop.index }}').click()">
+              Upload PDF
+            </button>
+          </form>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
 </body>
 </html>
