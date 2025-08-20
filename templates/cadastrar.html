@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Perfil</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo do site">
+        </div>
+        <nav>
+            <a href="#">quem somos</a>
+            <a href="#">como funciona</a>
+            <a href="#">empresa</a>
+            <span class="seta">➝</span>
+        </nav>
+    </header>
+
+    <main>
+        <div class="card">
+            <h2>Cadastrar perfil</h2>
+            <form action="{{ url_for('salvar') }}" method="POST">
+                <input type="text" name="titulo" placeholder="Digite um título" required>
+                <textarea name="descricao" placeholder="Escreva a descrição..." required></textarea>
+                <div class="botoes">
+                    <button type="reset" class="cancelar">Cancelar</button>
+                    <button type="submit" class="salvar">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
