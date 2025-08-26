@@ -52,5 +52,14 @@ def uploaded_file(filename):
 def cadastrar():
     return render_template("cadastrar.html")
 
+# 🔥 NOVAS ROTAS
+@app.route("/empresa")
+def empresa():
+    return render_template("empresa.html")
+
+@app.route("/como-funciona")
+def como_funciona():
+    return render_template("como_funciona.html")
+
 if __name__ == "__main__":
     app.run(debug=True)
