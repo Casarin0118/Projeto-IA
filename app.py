@@ -12,11 +12,14 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024  # 16MB
 
+
 def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
+
 # começa com 1 linha vazia
 linhas = [{"perfil": "", "descricao": "", "arquivo": None}]
+
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -44,22 +47,36 @@ def index():
 
     return render_template("index.html", linhas=linhas)
 
+
 @app.route("/uploads/<path:filename>")
 def uploaded_file(filename):
     return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
 
-@app.route("/cadastrar")
+
+@app.route("/cadastrar", methods=["GET", "POST"])
 def cadastrar():
+    if request.method == "POST":
+        # Aqui você pode adicionar a lógica para salvar os dados de cadastro
+        titulo = request.form.get("titulo")
+        descricao = request.form.get("descricao")
+        # Salve os dados ou faça o que for necessário, por exemplo:
+        linhas.append({"perfil": titulo, "descricao": descricao, "arquivo": None})
+        flash("Perfil cadastrado com sucesso!")
+        return redirect(url_for("index"))
+
     return render_template("cadastrar.html")
+
 
 # 🔥 NOVAS ROTAS
 @app.route("/empresa")
 def empresa():
     return render_template("empresa.html")
 
+
 @app.route("/como-funciona")
 def como_funciona():
     return render_template("como_funciona.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
